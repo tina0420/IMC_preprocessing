@@ -1,4 +1,4 @@
-# Preprocessing for Image Mass Cytometry dataset
+# Preprocessing for Imaging Mass Cytometry dataset
 ## Updated: November 29, 2025. By Tina (Yi-Ting) Hsu 
 ### Background and Rationale
 **IMC_preprocess** is a workflow for preprocessing [Imaging Mass Cytometry™](https://www.fluidigm.com/applications/imaging-mass-cytometry) (IMC) dataset. IMC is a spatial modality with single-cell proteiomics expression data as well as spatial context represented by x-y coordinates of all the cells in images. In the analysis work of IMC, we usually receive the dataset in batches due to the generation time (it is commonly 5-6 hours per core). Hence, it costs more and more time on repeating preprocessing steps since we need to change all the parameters everytime for the new dataset. To address this, this pipeline helps execute all the preprocessing works before cell type annotation in an automatic way which also establishes standardization in the projet. This workflow includes the typical preprocessing steps in the field, such as quality control and clustering, and the specific procedure of the workflow is documented below. Other single cell expression data with changes to the input data format is available as well for the pipeline which is described below in detail. 
@@ -26,7 +26,7 @@ The execution of the package *requires* a **Linux OS**. If you are using Windows
 
 1. Clone this file in a directory you prefer. This will download all the files needed for running the pipeline. The output will be stored in the folder created as "output".
 ```
-git clone https://github.com/
+git clone https://github.com/tina0420/IMC_preprocessing.git
 ```
 2. Create an environment with all the dependencies. 
 ```
@@ -67,9 +67,10 @@ Showcase for the output from IMC_preprocessing
 
 ------------------------------------------------------
 
-- **new_adata.h5ad**: an anndata object with a new column, leiden in obs, which represents the labels/clusters from Leiden Clustering.
+- **new_adata.h5ad**: an anndata object with a new column, bgmm in obs, which represents the labels/clusters from BGMM Clustering.
 
 ------------------------------------------------------
 <img src="https://github.com/tina0420/IMC_preprocessing/blob/main/output/cluster_result.png?raw=true" width="300" height="300">
 
 - **cluster_result.png**: This graph shows the clustering results by the marker expressions for each cell across clusters. The objective of the plot is to help finish cell type annotation.For each cluster, we can give the cell type based on the specific higher expressions in the corresponding protein markers/ For example, if most of the cells in Cluster A highly express in CD20 that we may annotate the cluster as B Cell cluster.
+
