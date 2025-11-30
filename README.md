@@ -22,11 +22,11 @@ The execution of the package *requires* a **Linux OS**. If you are using Windows
 
 1. Clone this file in a directory you prefer. This will download all the files needed for running the pipeline. The output will be stored in the folder created as "output".
 ```
-git clone https://github.com/
+git clone [https://github.com/](https://github.com/tina0420/IMC_preprocessing.git)
 ```
 2. Create an environment with all the dependencies. 
 ```
-conda env create --name nf_imc_preprocessing --file env
+conda env create --name nf_imc_preprocessing
 ```
 3. Activate the environment.
 ```
@@ -35,10 +35,6 @@ conda activate nf_imc_preprocessing
 4. Now run IMC_preprocess by executing the following code. This will create two files in the **output** folder: `batch_umap.png`, `new_adata.h5ad`, `cluster_result.png`.
 ```
 nextflow run workflow.nf
-```
-5. Generate a DAG from the workflow:
-```
-snakemake --dag results/heatmap.png | dot -Tsvg > dag.svg
 ```
 
 ### Input
@@ -71,28 +67,5 @@ Showcase for the output from IMC_preprocessing
 - **cluster_result.png**: This graph shows the clustering results by the marker expressions ofr each cell across clusters. The objective of the plot is to help finish cell type annotation.For each cluster, we can give the cell type based on the specific higher expressions in the corresponding protein markers/ For example, if most of the cells in Cluster A highly express in CD20 that we may annotate the cluster as B Cell cluster.
 
 
-
-
-ERROR ~ Error executing process > 'run_leiden_clustering (Run leiden clustering)'
-
-Caused by:
-  No signature of method: nextflow.script.ScriptBinding.publishDir() is applicable for argument types: () values: []
-  Possible solutions: _publish_(java.lang.String, java.lang.Object) -- Check script 'workflow.nf' at line: 49
-
-
-Source block:
-  """
-  python /app/run_leiden_clustering.py \
-  --input ${input_adata} \
-  --output ${outputDir}
-  """
-  publishDir "$projectDir/output", mode: 'copy'
-
-Container:
-  tina0420/imc_preprocessing:latest
-
-Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
-
- -- Check '.nextflow.log' file for details
 
 
