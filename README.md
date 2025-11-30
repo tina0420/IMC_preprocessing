@@ -75,33 +75,46 @@ Showcase for the output from IMC_preprocessing
 
 
 
-ERROR ~ Error executing process > 'batch_effect_check_plot (Batch effect check plot)'
-
-Error in the workflow!
-ERROR ~ Error executing process > 'batch_effect_check_plot (Batch effect check plot)'
-
-Caused by:
-  File `/Users/Eric/Downloads/IMC_preprocessing/output/*.png` is outside the scope of the process work directory: /Users/Eric/Downloads/IMC_preprocessing/work/2b/dfd71562175dc6c9006ac08a2410db
+params.input_adata = "$projectDir/data/biof501_data.h5ad"
+params.outputDir = "$projectDir/output"
 
 
-Command executed:
+process batch_effect_check_plot {
+    tag "Batch effect check plot"
 
-  python /app/batch_effect_check_plot.py     --input biof501_data.h5ad     --figdir /Users/Eric/Downloads/IMC_preprocessing/output
+    input:
+        path input_adata
+        val outputDir
 
-Command exit status:
-  -
+    output:
+        path "${outputDir}/*.png", emit:figs
 
-Command output:
-  (empty)
+    // container 'tina0420/imc_preprocessing:latest'
 
-Work dir:
-  /Users/Eric/Downloads/IMC_preprocessing/work/2b/dfd71562175dc6c9006ac08a2410db
+    script:
+    """
+    python /app/batch_effect_check_plot.py \
+    --input ${input_adata} \
+    --figdir ${outputDir}
+    """
+    
+    publishDir: "$projectDir/output", mode: 'copy'
+}
 
-Container:
-  tina0420/imc_preprocessing:latest
+Eric@xuyitingdeMacBook-Air IMC_preprocessing % nextflow run workflow.nf -with-docker tina0420/imc_preprocessing:latest
 
-Tip: view the complete command output by changing to the process work dir and entering the command `cat .command.out`
+ N E X T F L O W   ~  version 25.10.2
+
+Launching `workflow.nf` [wise_sanger] DSL2 - revision: 9208278eba
+
+ERROR ~ Script compilation error
+- file : /Users/Eric/Downloads/IMC_preprocessing/workflow.nf
+- cause: Unexpected input: '{' @ line 8, column 33.
+   process batch_effect_check_plot {
+                                   ^
+
+1 error
+
+NOTE: If this is the beginning of a process or workflow, there may be a syntax error in the body, such as a missing or extra comma, for which a more specific error message could not be produced.
 
  -- Check '.nextflow.log' file for details
-
-
