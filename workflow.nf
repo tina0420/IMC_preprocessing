@@ -37,7 +37,7 @@ process B_GMM_CLUSTER {
 
     script:
     """
-    python ${baseDir}/run_leiden_clustering.py \
+    python ${baseDir}/run_clustering.py \
         --input ${input_file}/ --output .
     """
 }
