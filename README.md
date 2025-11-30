@@ -75,31 +75,49 @@ Showcase for the output from IMC_preprocessing
 
 
 
+N E X T F L O W   ~  version 25.10.2
+
+Launching `workflow.nf` [golden_goldstine] DSL2 - revision: 9e7d406abe
+
+executor >  local (2)
+[ff/833758] bat… (Batch effect check plot) | 0 of 1 ✘
+[98/1ba966] run…ng (Run leiden clustering) | 0 of 1
+[-        ] plot_cluster_heatmap           -
 ERROR ~ Error executing process > 'run_leiden_clustering (Run leiden clustering)'
+
+Caused by:
+executor >  local (2)
+[ff/833758] bat… (Batch effect check plot) | 0 of 1 ✘
+[98/1ba966] run…ng (Run leiden clustering) | 0 of 1 ✘
+[-        ] plot_cluster_heatmap           -
 Error in the workflow!
 ERROR ~ Error executing process > 'run_leiden_clustering (Run leiden clustering)'
 
 Caused by:
-  File `/Users/Eric/Downloads/IMC_preprocessing/output/new_adata.h5ad` is outside the scope of the process work directory: /Users/Eric/Downloads/IMC_preprocessing/work/38/56885272e6917579947cbdbbd88abc
+  Process `run_leiden_clustering (Run leiden clustering)` terminated with an error exit status (127)
 
 
 Command executed:
 
-  run_leiden_clustering.py     --input biof501_data.h5ad     --output /Users/Eric/Downloads/IMC_preprocessing/output
+  run_leiden_clustering.py     --input biof501_data.h5ad     --output .
 
 Command exit status:
-  -
+  127
 
 Command output:
   (empty)
 
+Command error:
+  .command.sh: line 2: run_leiden_clustering.py: command not found
+
 Work dir:
-  /Users/Eric/Downloads/IMC_preprocessing/work/38/56885272e6917579947cbdbbd88abc
+  /Users/Eric/Downloads/IMC_preprocessing/work/98/1ba966da91d1924ec5e60fb0f78dd
 
 Container:
   tina0420/imc_preprocessing:latest
 
-Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+Tip: you can try to figure out what's wrong by changing to the process work dir and showing the script file named `.command.sh`
 
  -- Check '.nextflow.log' file for details
+
 
