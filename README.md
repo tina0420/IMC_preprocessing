@@ -75,46 +75,25 @@ Showcase for the output from IMC_preprocessing
 
 
 
-params.input_adata = "$projectDir/data/biof501_data.h5ad"
-params.outputDir = "$projectDir/output"
+ERROR ~ Error executing process > 'run_leiden_clustering (Run leiden clustering)'
+
+Caused by:
+  No signature of method: nextflow.script.ScriptBinding.publishDir() is applicable for argument types: () values: []
+  Possible solutions: _publish_(java.lang.String, java.lang.Object) -- Check script 'workflow.nf' at line: 49
 
 
-process batch_effect_check_plot {
-    tag "Batch effect check plot"
+Source block:
+  """
+  python /app/run_leiden_clustering.py \
+  --input ${input_adata} \
+  --output ${outputDir}
+  """
+  publishDir "$projectDir/output", mode: 'copy'
 
-    input:
-        path input_adata
-        val outputDir
+Container:
+  tina0420/imc_preprocessing:latest
 
-    output:
-        path "${outputDir}/*.png", emit:figs
-
-    // container 'tina0420/imc_preprocessing:latest'
-
-    script:
-    """
-    python /app/batch_effect_check_plot.py \
-    --input ${input_adata} \
-    --figdir ${outputDir}
-    """
-    
-    publishDir: "$projectDir/output", mode: 'copy'
-}
-
-Eric@xuyitingdeMacBook-Air IMC_preprocessing % nextflow run workflow.nf -with-docker tina0420/imc_preprocessing:latest
-
- N E X T F L O W   ~  version 25.10.2
-
-Launching `workflow.nf` [wise_sanger] DSL2 - revision: 9208278eba
-
-ERROR ~ Script compilation error
-- file : /Users/Eric/Downloads/IMC_preprocessing/workflow.nf
-- cause: Unexpected input: '{' @ line 8, column 33.
-   process batch_effect_check_plot {
-                                   ^
-
-1 error
-
-NOTE: If this is the beginning of a process or workflow, there may be a syntax error in the body, such as a missing or extra comma, for which a more specific error message could not be produced.
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
 
  -- Check '.nextflow.log' file for details
+
