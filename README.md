@@ -8,8 +8,6 @@ The underlying approach to this workflow has 3 modules:
 - Leiden Clustering: Run Leiden Clustering to make all the cells in clusters/categories.
 - Single-cell Protein Expression across Clusters: Produce a protein expression heatmap of each cell across clusters.
 
-<img src="https://github.com/ericlee0920/Cluster-Viz/blob/main/DAG.png?raw=true" width="300" height="300">
-
 Package Dependencies:
 *You should have Python 3 and Miniconda installed for Linux*
   - nextflow
@@ -96,4 +94,5 @@ Container:
 Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
 
  -- Check '.nextflow.log' file for details
+
 
