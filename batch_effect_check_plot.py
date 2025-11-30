@@ -9,8 +9,6 @@ parser.add_argument("--input")
 parser.add_argument("--figdir")
 args = parser.parse_args()
 
-os.makedirs(args.figdir, exist_ok=True)
-
 adata = read_h5ad(args.input)
 
 sc.pp.pca(adata)

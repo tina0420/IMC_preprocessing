@@ -1,90 +1,69 @@
 #!/usr/bin/env nextflow
 
-// parameter setting
-params.input_adata = "$projectDir/data/biof501_data.h5ad"
-params.outputDir = "$projectDir/output"
+nextflow.enable.dsl=2
 
+params.input  = "data/biof501_data.h5ad"
+params.outdir = "figures"
 
-process batch_effect_check_plot {
-    tag "Batch effect check plot"
+process BATCH_EFFECT_CHECK {
+    tag "batch_effect"
 
     input:
-        path input_adata
-        val figdir
+    path input_file
 
     output:
-        path "${figdir}/batch_umap.png"
+    path "batch_umap.png"
+
+    publishDir "${params.outdir}", mode: 'copy'
+
     script:
     """
-    python batch_effect_check_plot.py \
-    --input ${input_adata} \
-    --figdir ${figdir}
+    python ${baseDir}/batch_effect_check_plot.py \
+        --input ${input_file}/ --figdir .
     """
 }
 
 
-process run_leiden_clustering {
-    tag "Run leiden clustering"
+process B_GMM_CLUSTER {
+    tag "clustering"
 
     input:
-        path input_adata
-        val outputDir
+    path input_file
 
     output:
-        path "${outputDir}/new_adata.h5ad", emit: processed_h5ad
+    path "new_adata.h5ad"
+
+    publishDir "${params.outdir}", mode: 'copy'
 
     script:
     """
-    run_leiden_clustering.py \
-    --input ${input_adata} \
-    --output ${outputDir}
+    python ${baseDir}/run_leiden_clustering.py \
+        --input ${input_file}/ --output .
     """
 }
 
-
-process plot_cluster_heatmap {
-    tag "Plot cluster heatmap"
+process PLOT_HEATMAP {
+    tag "heatmap"
 
     input:
-        path input_adata
-        val figdir
+    path input_file
 
     output:
-        path "${figdir}/cluster_result.png",  emit: heatmap_png
+    path "cluster_result.png"
+
+    publishDir "${params.outdir}", mode: 'copy'
 
     script:
     """
-    plot_cluster_heatmap.py \
-    --input ${input_adata} \
-    --output ${outputDir}
+    python ${baseDir}/plot_cluster_heatmap.py \
+        --input ${input_file} --figdir .
     """
 }
-
 
 workflow {
-    batch_png = batch_effect_check_plot(
-        params.input_adata,
-        params.outputDir
-    )
-    // batch_effect_check_plot(params.input_adata, params.outputDir)
+    input_ch = Channel.fromPath(params.input)
 
-    // new_adata = run_leiden_clustering(params.input_adata, params.outputDir)
-    processed_h5ad = run_leiden_clustering(
-        params.input_adata,
-        params.outputDir
-    )
-
-    // plot_cluster_heatmap(new_adata, params.outputDir)
-    
-    heatmap_png = plot_cluster_heatmap(
-        processed_h5ad,
-        params.outputDir
-    )
-
+    umap      = BATCH_EFFECT_CHECK(input_ch)
+    clustered = B_GMM_CLUSTER(input_ch)
+    PLOT_HEATMAP(clustered)
 }
-
-
-workflow.onComplete {
-    log.info ( workflow.success ? "\nDone! The ouput is stored in --> $projectDir/$params.outputDir\n" : "Error in the workflow!" )
-}
-

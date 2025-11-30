@@ -11,11 +11,9 @@ parser.add_argument("--input")
 parser.add_argument("--figdir")
 args = parser.parse_args()
 
-os.makedirs(args.figdir, exist_ok=True)
-
 adata = read_h5ad(args.input)
 
-labels = adata.obs["leiden"].values
+labels = adata.obs["bgmm"].values
 
 df = pd.DataFrame(adata.X, columns=adata.var.index).assign(label=labels)
 df = df.sort_values(by="label")
