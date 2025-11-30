@@ -14,6 +14,7 @@ Package Dependencies:
   - matplotlib = 3.3.3
   - numpy = 1.19.4
   - pandas = 1.1.4
+  - scanpy = 1.11.1
   - seaborn = 0.11.0
   - pip = 20.2.4
 
@@ -65,6 +66,7 @@ Showcase for the output from IMC_preprocessing
 <img src="https://github.com/tina0420/IMC_preprocessing/blob/main/output/cluster_result.png?raw=true" width="300" height="300">
 
 - **cluster_result.png**: This graph shows the clustering results by the marker expressions ofr each cell across clusters. The objective of the plot is to help finish cell type annotation.For each cluster, we can give the cell type based on the specific higher expressions in the corresponding protein markers/ For example, if most of the cells in Cluster A highly express in CD20 that we may annotate the cluster as B Cell cluster.
+
 
 
 
