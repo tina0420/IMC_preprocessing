@@ -75,3 +75,31 @@ Showcase for the output from IMC_preprocessing
 
 
 
+ERROR ~ Error executing process > 'run_leiden_clustering (Run leiden clustering)'
+Error in the workflow!
+ERROR ~ Error executing process > 'run_leiden_clustering (Run leiden clustering)'
+
+Caused by:
+  File `/Users/Eric/Downloads/IMC_preprocessing/output/new_adata.h5ad` is outside the scope of the process work directory: /Users/Eric/Downloads/IMC_preprocessing/work/38/56885272e6917579947cbdbbd88abc
+
+
+Command executed:
+
+  run_leiden_clustering.py     --input biof501_data.h5ad     --output /Users/Eric/Downloads/IMC_preprocessing/output
+
+Command exit status:
+  -
+
+Command output:
+  (empty)
+
+Work dir:
+  /Users/Eric/Downloads/IMC_preprocessing/work/38/56885272e6917579947cbdbbd88abc
+
+Container:
+  tina0420/imc_preprocessing:latest
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+
